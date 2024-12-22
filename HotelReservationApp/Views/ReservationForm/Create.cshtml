@@ -1,0 +1,49 @@
+﻿@model HotelReservationApp.Models.Reservation
+
+<h2>Create Reservation</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="RoomId">Room</label>
+        <select id="RoomId" name="roomId" class="form-control">
+            @foreach (var room in ViewBag.Rooms as IEnumerable<HotelReservationApp.Models.Room>)
+            {
+                <option value="@room.Id">@room.RoomNumber - @room.Description (@room.Price.ToString("C"))</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="FullName">Full Name</label>
+        <input id="FullName" name="fullName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input id="Email" name="email" class="form-control" type="email" />
+    </div>
+
+    <div class="form-group">
+        <label for="CheckInDate">Check-in Date</label>
+        <input id="CheckInDate" name="checkInDate" class="form-control" type="date" />
+    </div>
+
+    <div class="form-group">
+        <label for="CheckOutDate">Check-out Date</label>
+        <input id="CheckOutDate" name="checkOutDate" class="form-control" type="date" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create Reservation</button>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="text-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+</form>
